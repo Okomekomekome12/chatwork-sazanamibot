@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="https://www.chatwork.com/favicon.ico" type="image/vnd.microsoft.icon" />
+    <title>さざなみbot追加の仕方</title>
+    <style>
+      /* ===== リセット & ベース ===== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  line-height: 1.8;
+  color: #333;
+  /* 背景：より深みと広がりのある爽やかな3色グラデーションに変更 */
+  background: linear-gradient(135deg, #4485ff 0%, #60a5fa 40%, #93c5fd 70%, #c084fc 100%);
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* ===== メインコンテナ ===== */
+.container {
+  max-width: 760px;
+  margin: 0 auto;
+  background: #fff;
+  /* 丸みを大幅にアップ (16px → 28px) */
+  border-radius: 28px;
+  box-shadow: 0 16px 48px rgba(30, 136, 229, 0.1);
+  padding: 48px 40px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== 見出し ===== */
+h1 {
+  font-size: 1.9rem;
+  color: #1565c0; /* 深い青 */
+  border-bottom: 3px solid #42a5f5; /* 明るい青 */
+  padding-bottom: 12px;
+  margin-bottom: 32px;
+  position: relative;
+}
+
+h1::after {
+  content: "";
+  margin-left: 8px;
+}
+
+h2 {
+  font-size: 1.3rem;
+  color: #0d47a1; /* 濃い紺色 */
+  margin-top: 36px;
+  margin-bottom: 16px;
+  padding-left: 14px;
+  border-left: 4px solid #64b5f6; /* 青のアクセントライン */
+  line-height: 1.4;
+}
+
+/* ===== テキスト ===== */
+p {
+  margin-bottom: 14px;
+  color: #444;
+}
+
+.about-text {
+  background: #e3f2fd; /* 淡い青の背景ボックス */
+  border-left: 4px solid #90caf9;
+  padding: 16px 20px;
+  /* 右側の角にしっかりとした丸みを付与 (8px → 16px) */
+  border-radius: 0 16px 16px 0;
+  margin-bottom: 24px;
+}
+
+/* ===== ステップリスト ===== */
+.steps {
+  list-style: none;
+  counter-reset: step-counter;
+  padding: 0;
+}
+
+.steps li {
+  counter-increment: step-counter;
+  position: relative;
+  padding: 16px 20px 16px 60px;
+  margin-bottom: 14px;
+  background: #fafafa;
+  /* リスト項目の丸みをアップ (10px → 18px) */
+  border-radius: 18px;
+  border: 1px solid #e0e0e0;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.steps li:hover {
+  transform: translateX(4px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
+
+.steps li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 32px;
+  /* 数字部分：青のグラデーション */
+  background: linear-gradient(135deg, #42a5f5, #1e88e5);
+  color: #fff;
+  border-radius: 50%; /* 完全な正円 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 6px rgba(33, 150, 243, 0.3);
+}
+
+.steps li .note {
+  display: block;
+  font-size: 0.85rem;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* ===== コピーボタン ===== */
+.copy-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 8px 0 4px;
+}
+
+.url-display {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.85rem;
+  background: #263238;
+  color: #80d8ff; /* 文字色：ライトブルー */
+  padding: 12px 20px;
+  /* URL表示部の丸みをアップ (8px → 14px) */
+  border-radius: 14px;
+  word-break: break-all;
+  flex: 1;
+  min-width: 200px;
+}
+
+#copyBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+  /* ボタン：青のグラデーション */
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
+  border: none;
+  /* ボタンの丸みをカプセル型に大幅アップ (8px → 30px) */
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s, background 0.3s;
+  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.25);
+  white-space: nowrap;
+}
+
+#copyBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(21, 101, 192, 0.35);
+}
+
+#copyBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(21, 101, 192, 0.2);
+}
+
+/* コピー完了時のスタイル（ディープブルー） */
+#copyBtn.copied {
+  background: linear-gradient(135deg, #0d47a1, #0a2540);
+  box-shadow: 0 4px 14px rgba(13, 71, 161, 0.3);
+}
+
+#copyBtn svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
+/* ===== トースト通知 ===== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #263238;
+  color: #fff;
+  padding: 12px 28px;
+  /* トースト通知も綺麗なカプセル型を維持 */
+  border-radius: 30px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ===== フッター ===== */
+.footer {
+  text-align: center;
+  margin-top: 36px;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 600px) {
+  .container {
+    padding: 28px 20px;
+    /* スマホ画面でも角が丸すぎないよう微調整 */
+    border-radius: 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.15rem;
+  }
+
+  .copy-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+  
+  #copyBtn {
+    /* スマホ時は幅いっぱいに広がっても綺麗なカプセル型に */
+    justify-content: center;
+  }
+}
+
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+      <h1>さざなみbot追加の仕方</h1>
+
+      <!-- セクション1 -->
+      <h2>1. さざなみbotについて</h2>
+      <p class="about-text">
+        さざなみbotは、古米が作ったbotのことだお
+      </p>
+
+      <!-- セクション2 -->
+      <h2>2. 導入方法</h2>
+      <ol class="steps">
+        <li>右上の自分のアイコンを押す。</li>
+        <li>その中の<strong>サービス連携</strong>を押す。</li>
+        <li><strong>webhook</strong>を押す。</li>
+        <li><strong>新規作成</strong>を押す。</li>
+        <li>
+          名前は自由に設定し、URLのところに下記のものを入れる。
+          <div class="copy-wrapper">
+            <span class="url-display">https://kareha-cwbot.up.railway.app/webhook</span>
+            <button id="copyBtn" data-url="https://kareha-cwbot.up.railway.app/webhook">
+              <!-- clipboard icon -->
+              <svg viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>
+              コピー
+            </button>
+          </div>
+        </li>
+        <li>
+          イベントを<strong>ルームイベント</strong>に設定し、<strong>メッセージ作成</strong>と<strong>更新</strong>の両方にチェックを入れる
+        </li>
+        <li>
+            <a href="https://www.chatwork.com/kareha-cwbot">こ↑こ↓</a>からコンタクトを申請して、承諾されたら入れたい部屋に入れてください</a>
+        </li>
+      </ol>
+
+      <div class="footer">© さざなみbot — html作成：ただのユーザー</div>
+    </div>
+
+    <!-- トースト通知 -->
+    <div class="toast" id="toast">コピーしました！</div>
+
+    <script>
+      const btn   = document.getElementById('copyBtn');
+      const toast = document.getElementById('toast');
+
+      btn.addEventListener('click', () => {
+        const url = btn.getAttribute('data-url');
+
+        navigator.clipboard.writeText(url).then(() => {
+          // ボタンの一時変化
+          btn.classList.add('copied');
+          btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M9 16.2l-3.5-3.5 1.4-1.4L9 13.4l7.1-7.1 1.4 1.4z"/></svg> コピー済み`;
+
+          // トースト表示
+          toast.classList.add('show');
+
+          setTimeout(() => {
+            toast.classList.remove('show');
+            btn.classList.remove('copied');
+            btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg> コピー`;
+          }, 2000);
+        }).catch(err => {
+          console.error('コピーに失敗しました', err);
+        });
+      });
+    </script>
+  </body>
+</html>
