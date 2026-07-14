@@ -23,6 +23,13 @@ def webhook():
     cw2      = chatwork.setup(420107748,API_TOKEN)
     log_room = chatwork.setup(418992889,API_TOKEN)
     role     = cw.is_admin(account_id)
+    
+
+    print(account_id)
+    print(body)
+    print(message_id)
+    print(room_id)
+    
 
     if int(account_id) == bot_id:
         print("bot垢やね")
@@ -35,4 +42,6 @@ def webhook():
     
     elif body == "/update":
         cw.messagesend("[info]さざなみbotV-1作成[/info]")
+
+    
     return jsonify({"status": "ok"}), 200
