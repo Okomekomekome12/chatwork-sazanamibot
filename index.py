@@ -1,6 +1,6 @@
 from flask import Flask , jsonify , request , render_template
 from yt_stream import get_stream_links , list_formats
-from commands import *
+from commands import help , link
 import chatwork
 import os
 
@@ -35,7 +35,7 @@ def webhook():
         print("bot垢やね")
 
     if body == "/help-sazanami":
-        help()
+        help.help(cw)
 
     elif body == "/live?":
         cw.messagesend("[info][title]さざなみ生存確認[/title]圧　倒　的　生　き　て　ま　す　（？）")
@@ -43,5 +43,23 @@ def webhook():
     elif body == "/update":
         cw.messagesend("[info]さざなみbotV-1作成[/info]")
 
-    
+    elif body and body.count("削除") >= 1:
+            target = body.split("to=")[1].split("]")[0]  
+            delete_room_id , delete_message_id = target.split("-")
+            deleter_room_id = delete_room_id
+            deleter_message_id = delete_message_id
+            print(deleter_room_id,deleter_message_id)
+            cw.delete_message(deleter_message_id)
+    elif body == "/link":
+        link.link(cw)
+    elif body.count("/youtube") >= 1:
+        stream_link = body.split()[1]
+        print(stream_link)
+        info = get_stream_links(stream_link)
+        print(info.url)
+        cw.messagesend(f"[info][title]{stream_link}の統合ストリーム[/title]{info.url}")
     return jsonify({"status": "ok"}), 200
+
+if __name__ == "__main__":
+     port = int(os.environ.get("PORT",8080))
+     app.run(host="0.0.0.0" , port=port)
