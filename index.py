@@ -38,7 +38,7 @@ def webhook():
         help.help(cw)
 
     elif body == "/live?":
-        cw.messagesend("[info][title]さざなみ生存確認[/title]圧　倒　的　生　き　て　ま　す　（？）")
+        cw.messagesend("[info][title]さざなみ生存確認[/title]圧　倒　的　生　き　て　ま　す　（？）[/info]")
     
     elif body == "/update":
         cw.messagesend("[info]さざなみbotV-1作成[/info]")
