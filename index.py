@@ -11,7 +11,7 @@ bot_id    = 11156582
 def index():
     return render_template("index.html")
 
-@app.route("/" , methods=["POST"])
+@app.route("/webhook" , methods=["POST"])
 def webhook():
     data = request.json
     account_id = chatwork.webhook_get_account_id(data)
