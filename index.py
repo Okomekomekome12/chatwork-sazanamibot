@@ -24,11 +24,12 @@ def webhook():
     log_room = chatwork.setup(418992889,API_TOKEN)
     role     = cw.is_admin(account_id)
     
-    print("\n================================\n")
-    print(account_id)
-    print(body)
-    print(message_id)
-    print(room_id)
+    print(f"\n=== Webhook受信 ===")
+    print(f"account_id: {account_id}")
+    print(f"body: {body}")
+    print(f"一致?: {int(account_id) == bot_id}")
+    print(f"message_id : {message_id}")
+    print(f"room_id : {room_id}")
     print("\n===========================\n")
 
     if int(account_id) == bot_id:
