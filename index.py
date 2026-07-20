@@ -30,7 +30,7 @@ def webhook():
     print(f"一致?: {int(account_id) == bot_id}")
     print(f"message_id : {message_id}")
     print(f"room_id : {room_id}")
-    print("\n===========================\n")
+    print(f"==================\n")
 
     if int(account_id) == bot_id:
         print("bot垢やね")
